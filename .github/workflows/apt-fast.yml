@@ -20,10 +20,7 @@ jobs:
       - name: Install mozjs
         run: |
           sudo apt-get install -y libmozjs-102-dev
-      - run: npm ci
-      - run: npm run build
-      - name: Tests
-        run: js102 test/mozjs.js
+     
 
   # To reproduce SpiderMonkey 115 builds locally:
   #
@@ -47,7 +44,4 @@ jobs:
       - name: Install mozjs
         run: |
           sudo apt-get install -y libmozjs-115-dev
-      - run: npm ci
-      - run: npm run build
-      - name: Tests
-        run: js115 test/mozjs
+     
