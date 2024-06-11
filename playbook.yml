@@ -1,0 +1,5 @@
+- name: Get kubernetes configuration of stage {{ inventory_hostname | upper }}
+  azure.azcollection.azure_rm_aks_info:
+    resource_group: '{{ azure_get_kubeconfig__aks_resourcegroup }}'
+    name: '{{ azure_get_kubeconfig__aks_name }}'
+    show_kubeconfig: admin
