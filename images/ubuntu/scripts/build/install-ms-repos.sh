@@ -10,6 +10,10 @@ os_label=$(lsb_release -rs)
 wget https://packages.microsoft.com/config/ubuntu/$os_label/packages-microsoft-prod.deb
 dpkg -i packages-microsoft-prod.deb
 
+# limit packages feed to current arch, speed up "apt-get update"
+
+arch=$(dpkg --print-architecture)
+echo "APT::Architecture=${arch};" > /etc/apt/apt.conf.d/99arch
 # update
 apt-get install apt-transport-https ca-certificates curl software-properties-common
 apt-get update
