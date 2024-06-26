@@ -1,7 +1,7 @@
 FROM node:18-alpine AS base
 
-WORKDIR /src
+WORKDIR /app
 
 COPY --link package.json package-lock.json .
 
-RUN ls -la /src
+RUN ls -la /app
