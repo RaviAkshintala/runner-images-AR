@@ -1,0 +1,14 @@
+name: My Workflow
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install Microsoft Repos
+        run: |
+          chmod +x ./images/ubuntu/scripts/build/install-ms-repos.sh
+          ./images/ubuntu/scripts/build/install-ms-repos.sh
