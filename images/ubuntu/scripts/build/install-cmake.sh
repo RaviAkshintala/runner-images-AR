@@ -14,7 +14,8 @@ if command -v cmake; then
     echo "cmake is already installed"
 else
 	# Download script to install CMake
-	download_url=$(resolve_github_release_asset_url "Kitware/CMake" "endswith(\"inux-x86_64.sh\")" "latest")
+	VERSION="v3.31.6"
+	download_url=$(resolve_github_release_asset_url "Kitware/CMake" "endswith(\"inux-x86_64.sh\")" "VERSION")
 	curl -fsSL "${download_url}" -o cmakeinstall.sh
 
 	# Supply chain security - CMake
