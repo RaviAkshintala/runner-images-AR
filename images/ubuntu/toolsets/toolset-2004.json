@@ -134,7 +134,6 @@
             "dpkg",
             "dpkg-dev",
             "fakeroot",
-            "fakeroot",
             "fonts-noto-color-emoji",
             "gnupg2",
             "imagemagick",
