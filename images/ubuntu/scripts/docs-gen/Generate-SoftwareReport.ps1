@@ -90,9 +90,7 @@ $projectManagement.AddToolVersion("Ant", $(Get-AntVersion))
 $projectManagement.AddToolVersion("Gradle", $(Get-GradleVersion))
 $projectManagement.AddToolVersion("Lerna", $(Get-LernaVersion))
 $projectManagement.AddToolVersion("Maven", $(Get-MavenVersion))
-if ((Test-IsUbuntu20) -or (Test-IsUbuntu22)) {
-    $projectManagement.AddToolVersion("Sbt", $(Get-SbtVersion))
-}
+$projectManagement.AddToolVersion("Sbt", $(Get-SbtVersion))
 
 # Tools
 $tools = $installedSoftware.AddHeader("Tools")

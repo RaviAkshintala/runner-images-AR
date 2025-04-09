@@ -210,7 +210,7 @@ Describe "R" -Skip:((-not (Test-IsUbuntu20)) -and (-not (Test-IsUbuntu22))) {
     }
 }
 
-Describe "Sbt" -Skip:((-not (Test-IsUbuntu20)) -and (-not (Test-IsUbuntu22))) {
+Describe "Sbt" {
     It "sbt" {
         "sbt --version" | Should -ReturnZeroExitCode
     }
