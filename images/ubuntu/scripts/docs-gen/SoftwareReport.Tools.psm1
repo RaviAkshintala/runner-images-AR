@@ -283,3 +283,7 @@ function Get-YqVersion {
     $yqVersion = $(yq -V) | Get-StringPart -Part 3
     return $yqVersion.TrimStart("v").Trim()
 }
+
+function Get-UvVersion {
+    return $(uv --version)
+}

@@ -264,6 +264,10 @@
         {
             "package": "ansible-core",
             "cmd": "ansible"
+        },
+        {
+            "package": "uv",
+            "cmd": "uv"
         }
     ],
     "dotnet": {
