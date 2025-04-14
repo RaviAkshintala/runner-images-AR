@@ -375,7 +375,7 @@
     },
     "aliyunCli": {
         "version": "3.0.268",
-        "sha256": "8dc52e0805a2f3ea875bb1cf1a171df3d16775c5440725011097576c6e3f2b25",
+        "sha256": "451bffd69ad3a6c793b55590bcbd23a609057348c4fedee91f0cdeb90009bc70",
         "pinnedDetails": {
             "reason": "Showing the outdated version of alibaba in the readme",
             "review-at": "2025-06-01",
