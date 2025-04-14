@@ -15,8 +15,8 @@ if is_ubuntu20; then
     toolset_version=$(get_toolset_value '.aliyunCli.version')
     download_url="https://github.com/aliyun/aliyun-cli/releases/download/v$toolset_version/aliyun-cli-linux-$toolset_version-amd64.tgz"
 else
-    download_url=$(resolve_github_release_asset_url "aliyun/aliyun-cli" "contains(\"aliyun-cli-linux\") and endswith(\"amd64.tgz\")" "3.0.269")
-    hash_url="https://github.com/aliyun/aliyun-cli/releases/3.0.269/download/SHASUMS256.txt"
+    download_url=$(resolve_github_release_asset_url "aliyun/aliyun-cli" "contains(\"aliyun-cli-linux\") and endswith(\"amd64.tgz\")" "v3.0.269")
+    hash_url="https://github.com/aliyun/aliyun-cli/releases/v3.0.269/download/SHASUMS256.txt"
 fi
 
 archive_path=$(download_with_retry "$download_url")
