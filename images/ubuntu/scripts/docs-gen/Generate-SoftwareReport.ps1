@@ -157,6 +157,7 @@ $tools.AddToolVersion("yamllint", $(Get-YamllintVersion))
 $tools.AddToolVersion("yq", $(Get-YqVersion))
 $tools.AddToolVersion("zstd", $(Get-ZstdVersion))
 $tools.AddToolVersion("Ninja", $(Get-NinjaVersion))
+$tools.AddToolVersion("Uv", $(Get-UvVersion))
 
 # CLI Tools
 $cliTools = $installedSoftware.AddHeader("CLI Tools")

@@ -22,4 +22,7 @@ for package in $pipx_packages; do
     fi
 done
 
+echo "Install uv into default python"
+pipx install uv
+
 invoke_tests "Common" "PipxPackages"
