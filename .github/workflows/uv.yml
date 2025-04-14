@@ -36,3 +36,10 @@ jobs:
         run: |
           export PATH="$PATH:$HOME/.local/bin"
           uv --version
+
+     
+      - name: Check UV Package Size
+        run: |
+          export PATH="$PATH:$HOME/.local/bin"
+          pip show uv | grep "Location" -A 1
+          du -sh $(pip show uv | grep "Location" | cut -d' ' -f2)/uv
