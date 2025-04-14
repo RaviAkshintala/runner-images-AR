@@ -1,0 +1,38 @@
+name: Install UV with Pipx
+
+on: [push, pull_request]
+
+jobs:
+  install-uv:
+    runs-on: ubuntu-24.04
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x' # Use the desired Python version
+
+      # Step 3: Install pipx
+      - name: Install pipx
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip python3-venv
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+
+      # Step 4: Install UV using pipx
+      - name: Install UV
+        run: |
+          export PATH="$PATH:$HOME/.local/bin"
+          pipx install uv
+
+      # Step 5: Check UV version
+      - name: Check UV Version
+        run: |
+          export PATH="$PATH:$HOME/.local/bin"
+          uv --version
