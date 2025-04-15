@@ -203,7 +203,7 @@ function Get-AzureDevopsVersion {
 }
 
 function Get-AlibabaCloudCliVersion {
-    return $(aliyun version)
+    return $(aliyun --version)
 }
 
 function Get-AWSCliVersion {
