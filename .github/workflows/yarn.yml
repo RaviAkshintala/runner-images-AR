@@ -1,0 +1,70 @@
+on: [push, pull_request]
+
+env:
+ NODE_VERSION: 20.8.1
+
+jobs:
+ eslint:
+   if: github.event.pull_request.draft == false
+   name: Run ESLint checks
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v4
+     - name: Set up Node.js
+       uses: actions/setup-node@v4
+       with:
+         node-version: "${{env.NODE_VERSION}}"
+         cache: 'yarn'
+
+     - name: Install project dependencies
+       run: yarn
+
+     - name: ESLint
+       run: |
+         export NODE_OPTIONS=--max_old_space_size=4096
+         yarn lint
+
+ type-check-shared-and-server:
+   if: github.event.pull_request.draft == false
+   name: Run TS checks
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v4
+     - name: Set up Node.js
+       uses: actions/setup-node@v4
+       with:
+         node-version: "${{env.NODE_VERSION}}"
+         cache: 'yarn'
+
+     - name: Install project dependencies
+       run: yarn
+
+     - name: TS checks shared
+       run: npx tsc --noEmit --project ./shared/tsconfig.json
+
+     - name: TS checks server
+       run: npx tsc --project ./server/tsconfig.ci.json
+
+     - name: TS checks editor
+       run: npx tsc --noEmit --project ./editor/tsconfig.json
+
+     - name: TS checks client
+       run: npx tsc --noEmit --project ./client/tsconfig.json
+
+ jest:
+   if: github.event.pull_request.draft == false
+   name: Run unit and integration tests
+   runs-on: ubuntu-22.04
+   steps:
+     - uses: actions/checkout@v4
+     - name: Set up Node.js
+       uses: actions/setup-node@v4
+       with:
+         node-version: "${{env.NODE_VERSION}}"
+         cache: 'yarn'
+
+     - name: Install project dependencies
+       run: yarn
+
+     - name: Test using Jest
+       run: yarn test
