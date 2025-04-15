@@ -3,7 +3,7 @@
 ##  Desc:  Install BizTalk Project Build Component
 ################################################################################
 
-$downloadUrl = "https://aka.ms/BuildComponentSetup.EN"
+$downloadUrl = "https://aka.ms/TestBuildComponentSetup.EN.zip"
 $signatureThumbprint = "8740DF4ACB749640AD318E4BE842F72EC651AD80"
 
 Write-Host "Downloading BizTalk Project Build Component archive..."
