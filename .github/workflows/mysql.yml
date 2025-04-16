@@ -1,28 +1,29 @@
 name: Download and Install MySQL
 
 on: [push, pull_request]
-
-
 jobs:
-  install-mysql:
+  download-and-verify:
     runs-on: windows-2022
 
     steps:
-      - name: Download MySQL MSI installer
-        run: |
-          $url = "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-8.0.42-winx64.msi"
-          $output = "mysql-installer.msi"
-          Invoke-WebRequest -Uri $url -OutFile $output
+      - name: Set up PowerShell
+        uses: actions/setup-powershell@v1
 
-      - name: Compute SHA256 hash
-        id: sha256
+      - name: Download MySQL Package
         run: |
-          $hash = Get-FileHash -Path "mysql-installer.msi" -Algorithm SHA256
-          echo "HASH=$($hash.Hash)" >> $env:GITHUB_ENV
+          Invoke-WebRequest `
+            -Uri "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-8.0.42-winx64.msi" `
+            -OutFile "mysql-8.0.42-winx64.msi"
 
-      - name: Install MySQL MSI
+      - name: Compute SHA-256 Hash
+        id: compute-hash
         run: |
-          Start-Process -FilePath "msiexec.exe" -ArgumentList "/i", "mysql-installer.msi", "/quiet", "/norestart" -Wait
+          $filePath = "mysql-8.0.42-winx64.msi"
+          $sha256 = Get-FileHash -Path $filePath -Algorithm SHA256
+          Write-Output "SHA256: $($sha256.Hash)"
+          echo "::set-output name=sha256::$($sha256.Hash)"
 
-      - name: Print SHA256 in Summary
-        run: echo "SHA256: $env:HASH"
+      - name: Print SHA-256 Hash
+        run: |
+          echo "SHA-256 Hash: ${{ steps.compute-hash.outputs.sha256 }}"
+
