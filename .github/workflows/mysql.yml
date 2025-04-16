@@ -1,0 +1,29 @@
+name: Download and Install MySQL
+
+on: [push, pull_request]
+
+
+jobs:
+  install-mysql:
+    runs-on: windows-2022
+
+    steps:
+      - name: Download MySQL MSI installer
+        run: |
+          $url = "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-8.0.42-winx64.msi"
+          $output = "mysql-installer.msi"
+          Invoke-WebRequest -Uri $url -OutFile $output
+
+      - name: Compute SHA256 hash
+        id: sha256
+        run: |
+          $hash = Get-FileHash -Path "mysql-installer.msi" -Algorithm SHA256
+          Write-Host "SHA256: $($hash.Hash)"
+          echo "::set-output name=sha::$($hash.Hash)"
+
+      - name: Install MySQL MSI
+        run: |
+          Start-Process -FilePath "msiexec.exe" -ArgumentList "/i", "mysql-installer.msi", "/quiet", "/norestart" -Wait
+
+      - name: Print SHA256 in Summary
+        run: echo "SHA256: ${{ steps.sha256.outputs.sha }}"
