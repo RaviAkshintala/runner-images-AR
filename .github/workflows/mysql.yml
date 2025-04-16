@@ -18,12 +18,11 @@ jobs:
         id: sha256
         run: |
           $hash = Get-FileHash -Path "mysql-installer.msi" -Algorithm SHA256
-          Write-Host "SHA256: $($hash.Hash)"
-          echo "::set-output name=sha::$($hash.Hash)"
+          echo "HASH=$($hash.Hash)" >> $env:GITHUB_ENV
 
       - name: Install MySQL MSI
         run: |
           Start-Process -FilePath "msiexec.exe" -ArgumentList "/i", "mysql-installer.msi", "/quiet", "/norestart" -Wait
 
       - name: Print SHA256 in Summary
-        run: echo "SHA256: ${{ steps.sha256.outputs.sha }}"
+        run: echo "SHA256: $env:HASH"
