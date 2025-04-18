@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   test-podman-network:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
@@ -17,6 +17,6 @@ jobs:
 
       - name: Run Podman Network Commands
         run: |
-          podman network create test-net 
+          podman network create -d bridge test-net 
           podman network ls 
           podman network rm test-net 
