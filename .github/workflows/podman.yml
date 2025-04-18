@@ -18,6 +18,6 @@ jobs:
       - name: Run Podman Network Commands
         run: |
          podman network create -d bridge test-net 
-         podman info --format {{.Plugins.Network}}
-         podman network ls 
+         
+         podman network ls --filter driver=bridge --format {{.Name}}
          podman network rm test-net 
