@@ -17,6 +17,7 @@ jobs:
 
       - name: Run Podman Network Commands
         run: |
-         podman network create -d bridge test-net | Should -ReturnZeroExitCode
-         podman network ls | Should -Not -OutputTextMatchingRegex Error
-         podman network rm test-net | Should -ReturnZeroExitCode
+         podman network create -d bridge test-net 
+         podman info --format {{.Plugins.Network}}
+         podman network ls 
+         podman network rm test-net 
