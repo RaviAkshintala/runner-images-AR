@@ -11,11 +11,9 @@ source $HELPER_SCRIPTS/os.sh
 # pin podman due to https://github.com/actions/runner-images/issues/7753
 #                   https://bugs.launchpad.net/ubuntu/+source/libpod/+bug/2024394
 #
-if ! is_ubuntu22; then
-    install_packages=(podman buildah skopeo)
-else
-    install_packages=(podman=3.4.4+ds1-1ubuntu1 buildah skopeo)
-fi
+
+install_packages=(podman buildah skopeo)
+
 
 # Packages is available in the official Ubuntu upstream starting from Ubuntu 21
 if is_ubuntu20; then
