@@ -347,7 +347,7 @@ Describe "Containers" {
 
     # https://github.com/actions/runner-images/issues/7753
     It "podman networking" -TestCases "podman CNI plugins" {
-        "podman network create -d bridge test-net" | Should -ReturnZeroExitCode
+        "podman network create test-net" | Should -ReturnZeroExitCode
         "podman network ls" | Should -Not -OutputTextMatchingRegex "Error"
         "podman network rm test-net" | Should -ReturnZeroExitCode
     }
