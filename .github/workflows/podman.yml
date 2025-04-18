@@ -17,6 +17,6 @@ jobs:
 
       - name: Run Podman Network Commands
         run: |
-          podman network create -d bridge test-net 
+          podman network create test-net 
           podman network ls 
           podman network rm test-net 
