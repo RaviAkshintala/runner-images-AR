@@ -1,0 +1,22 @@
+name: Test Podman Network
+
+on: [push, pull_request]
+
+jobs:
+  test-podman-network:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Podman
+        run: |
+          sudo apt update
+          sudo apt install -y podman
+
+      - name: Run Podman Network Commands
+        run: |
+          podman network create -d bridge test-net 
+          podman network ls 
+          podman network rm test-net 
