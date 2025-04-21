@@ -18,7 +18,7 @@ else
 fi
 
 # Packages is available in the official Ubuntu upstream starting from Ubuntu 21
-if is_ubuntu20; then
+if is_ubuntu22; then
     REPO_URL="https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_$(lsb_release -rs)"
     GPG_KEY="/usr/share/keyrings/devel_kubic_libcontainers_stable.gpg"
     REPO_PATH="/etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
