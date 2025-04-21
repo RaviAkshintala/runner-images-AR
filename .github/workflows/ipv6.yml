@@ -2,7 +2,6 @@ name: CI
 
 on: [push, pull_request]
 
-
 jobs:
   test-ubuntu-iptables:
     name: Test Ubuntu iptables MARK
@@ -19,9 +18,16 @@ jobs:
       - name: Check iptables version
         run: sudo ${{ matrix.iptables }} --version
 
-             sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+      - name: Setup IPv6 mangle table (nft only)
+        if: matrix.iptables == 'ip6tables'
+        run: |
+          sudo nft add table ip6 mangle || true
+          sudo nft add chain ip6 mangle PREROUTING '{ type filter hook prerouting priority mangle; }' || true
 
-
-      - name: Test ip6
-        run: sudo ${{ matrix.iptables }} -t mangle -A PREROUTING -p tcp --dport 80 -j MARK --set-xmark 0x1/0x1
-      
+      - name: Apply MARK rule
+        run: |
+          if [[ "${{ matrix.iptables }}" == "ip6tables" ]]; then
+            sudo nft add rule ip6 mangle PREROUTING tcp dport 80 mark set 0x1
+          else
+            sudo iptables -t mangle -A PREROUTING -p tcp --dport 80 -j MARK --set-xmark 0x1/0x1
+          fi
