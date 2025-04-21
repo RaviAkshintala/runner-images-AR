@@ -7,7 +7,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 5
 
-
     strategy:
       fail-fast: false
       matrix:
@@ -15,13 +14,11 @@ jobs:
         iptables: [iptables, ip6tables]
 
     steps:
+      - name: Switch ip6tables to legacy backend (if ip6tables)
+        if: matrix.iptables == 'ip6tables'
+        run: |
+          sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+          sudo update-alternatives --set ip6tables-restore /usr/sbin/ip6tables-legacy-restore
 
-    - name: Install and switch to legacy ip6tables
-      run: |
-            sudo apt-get update
-            sudo apt-get install -y iptables iptables-legacy
-            sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
-
-
-    - name: Test ip6
-      run: sudo ip6tables -t mangle -A PREROUTING -p tcp --dport 80 -j MARK --set-xmark 0x1/0x1
+      - name: Test iptables/ip6tables MARK set-xmark
+        run: sudo ${{ matrix.iptables }} -t mangle -A PREROUTING -p tcp --dport 80 -j MARK --set-xmark 0x1/0x1
