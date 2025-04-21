@@ -1,0 +1,30 @@
+name: Install Podman and Configure Network Plugins
+
+on: [push, pull_request]
+
+jobs:
+  setup-podman:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Update apt and install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl dpkg
+
+      - name: Install Podman
+        run: |
+          sudo apt-get install -y podman
+
+      - name: Download and install container network plugins
+        run: |
+          curl -O http://archive.ubuntu.com/ubuntu/pool/universe/g/golang-github-containernetworking-plugins/containernetworking-plugins_1.1.1+ds1-3build1_amd64.deb
+          sudo dpkg -i containernetworking-plugins_1.1.1+ds1-3build1_amd64.deb
+
+      - name: Create Podman network
+        run: |
+          podman network create -d bridge test-net
+          podman network ls
