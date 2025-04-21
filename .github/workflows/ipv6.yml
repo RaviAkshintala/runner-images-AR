@@ -16,14 +16,12 @@ jobs:
 
     steps:
 
-     - name: Install legacy iptables
-       run: 
-              
-
+    - name: Install and switch to legacy ip6tables
+      run: |
             sudo apt-get update
             sudo apt-get install -y iptables iptables-legacy
             sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
 
-     - name: Test ip6
-       run: sudo ip6tables -t mangle -A PREROUTING -p tcp --dport 80 -j MARK --set-xmark 0x1/0x1
+    - name: Test ip6
+      run: sudo ip6tables -t mangle -A PREROUTING -p tcp --dport 80 -j MARK --set-xmark 0x1/0x1
