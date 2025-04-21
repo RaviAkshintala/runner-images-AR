@@ -31,3 +31,8 @@ jobs:
       - name: Verify Container Networking Plugins
         run: |
           ls /usr/lib/cni/
+
+      - name: Remove Podman Network
+        run: |
+          podman network rm test-net
+          podman network ls
