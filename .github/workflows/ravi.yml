@@ -4,11 +4,11 @@ on: [push, pull_request]
 
 jobs:
   setup-podman:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
 
 
