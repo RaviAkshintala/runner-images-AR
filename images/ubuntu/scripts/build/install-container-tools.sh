@@ -27,6 +27,10 @@ if is_ubuntu20; then
     echo "deb [arch=amd64 signed-by=$GPG_KEY] ${REPO_URL}/ /" > $REPO_PATH
 fi
 
+# Install containernetworking-plugins
+curl -O http://archive.ubuntu.com/ubuntu/pool/universe/g/golang-github-containernetworking-plugins/containernetworking-plugins_1.1.1+ds1-3build1_amd64.deb
+dpkg -i containernetworking-plugins_1.1.1+ds1-3build1_amd64.deb
+
 # Install podman, buildah, skopeo container's tools
 apt-get update
 apt-get install ${install_packages[@]}
