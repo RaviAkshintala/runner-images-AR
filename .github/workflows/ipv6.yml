@@ -1,8 +1,5 @@
 name: CI
-on:
-  push:
-    branches:
-      - ubuntu-2204-testing
+on: [push, pull_request]
 
 jobs:
   test-ubuntu-iptables:
@@ -20,4 +17,4 @@ jobs:
     steps:
 
       - name: Test ip6
-        run: sudo nft add rule ip6 mangle PREROUTING tcp dport 80 mark set 0x1
+        run:  sudo nft add rule ip6 mangle PREROUTING tcp dport 80 mark set 0x1
