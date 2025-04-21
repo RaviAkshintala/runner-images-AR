@@ -16,10 +16,13 @@ jobs:
         iptables: [iptables, ip6tables]
 
     steps:
-      # Step to debug ip6tables version
-      - name: Check ip6tables version
-        run: sudo ip6tables --version
+       - name: Check ip6tables version
+         run: sudo ip6tables --version
 
-      # Original step
-      - name: Test ip6
-        run: sudo ${{ matrix.iptables }} -t mangle -A PREROUTING -p tcp --dport 80 -j MARK --set-xmark 0x1/0x1
+       - name: Check ip6tables backend
+         run: sudo update-alternatives --display iptables
+
+       - name: Test ip6
+         run: sudo ${{ matrix.iptables }} -t mangle -A PREROUTING -p tcp --dport 80 -j MARK --set-xmark 0x1/0x1
+ 
+      
