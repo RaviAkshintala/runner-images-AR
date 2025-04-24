@@ -1,18 +1,21 @@
-name: Ubuntu 22.04 Workflow
+name: perf
 
 on: [push, pull_request]
 
 jobs:
-  ubuntu-22-job:
-    runs-on: ubuntu-22.04
+  performance:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
+
+    - name: Verify kernel version
+      run: uname -r
 
     - name: Install dependencies for building kernel
       run: |
         sudo apt-get update
         sudo apt-get install build-essential libncurses-dev bison flex libssl-dev libelf-dev
-       
-
+
+
