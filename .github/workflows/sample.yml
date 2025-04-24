@@ -8,11 +8,11 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Run a sample script
+    - name: Install dependencies for building kernel
       run: |
-        echo "Running on Ubuntu 22.04"
-        uname -a
+        sudo apt-get update
+        sudo apt-get install build-essential libncurses-dev bison flex libssl-dev libelf-dev
        
 
