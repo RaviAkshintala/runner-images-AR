@@ -1,0 +1,16 @@
+name: Ninja Version Check
+
+on: [push, pull_request]
+
+jobs:
+  check-ninja-version:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Ninja Version Check
+        run: |
+          ninja --version
+          displayName: Ninja Version Check
