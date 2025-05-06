@@ -1,0 +1,25 @@
+name: Run E2E Tests
+
+on: [push, pull_request]
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-24.04  # Specify Ubuntu 24 as the environment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Check out the repository code
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # Specify the Node.js version (adjust as needed)
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Change to e2e directory
+        working-directory: ./e2e
+        run: |
+          npm run build
+          npm run run:e2e
