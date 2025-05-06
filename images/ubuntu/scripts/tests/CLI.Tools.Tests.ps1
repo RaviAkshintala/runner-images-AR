@@ -48,7 +48,7 @@ Describe "OC CLI" -Skip:((-not (Test-IsUbuntu22))) {
     }
 }
 
-Describe "Oras CLI" -Skip:((-not (Test-IsUbuntu22))) {
+Describe "Oras CLI" {
     It "Oras CLI" {
         "oras version" | Should -ReturnZeroExitCode
     }

@@ -160,10 +160,10 @@ $cliTools.AddToolVersion("Azure CLI", $(Get-AzureCliVersion))
 $cliTools.AddToolVersion("Azure CLI (azure-devops)", $(Get-AzureDevopsVersion))
 $cliTools.AddToolVersion("GitHub CLI", $(Get-GitHubCliVersion))
 $cliTools.AddToolVersion("Google Cloud CLI", $(Get-GoogleCloudCLIVersion))
+$cliTools.AddToolVersion("ORAS CLI", $(Get-ORASCliVersion))
 if (Test-IsUbuntu22) {
     $cliTools.AddToolVersion("Netlify CLI", $(Get-NetlifyCliVersion))
     $cliTools.AddToolVersion("OpenShift CLI", $(Get-OCCliVersion))
-    $cliTools.AddToolVersion("ORAS CLI", $(Get-ORASCliVersion))
     $cliTools.AddToolVersion("Vercel CLI", $(Get-VerselCliversion))
 }
 
