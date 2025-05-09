@@ -1,0 +1,27 @@
+name: Generate SHA256 for Azure Cosmos DB Emulator
+on: [push, pull_request]
+
+jobs:
+  generate-sha256:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download Azure Cosmos DB Emulator
+        run: |
+          $url = "https://aka.ms/cosmosdb-emulator"
+          $outputPath = "cosmosdb-emulator.msi"
+          Invoke-WebRequest -Uri $url -OutFile $outputPath
+        shell: pwsh
+
+      - name: Generate SHA256 Checksum
+        id: generate-sha256
+        run: |
+          $filePath = "cosmosdb-emulator.msi"
+          $sha256 = Get-FileHash -Path $filePath -Algorithm SHA256 | Select-Object -ExpandProperty Hash
+          Write-Host "::set-output name=sha256::$sha256"
+        shell: pwsh
+
+      - name: Print SHA256 Checksum
+        run: echo "SHA256 Checksum: ${{ steps.generate-sha256.outputs.sha256 }}"
