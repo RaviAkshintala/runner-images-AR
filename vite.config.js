@@ -3,7 +3,7 @@ export default {
   server: {
     proxy: {
       '/api': {
-        target: 'https://example.com', // Change to your target
+        target: 'https://example.com', // Your public resource
         changeOrigin: true,
         secure: false,
       }
