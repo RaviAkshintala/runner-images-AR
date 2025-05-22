@@ -1,0 +1,34 @@
+name: Vite Proxy Test
+
+on:[push,pull_request]
+
+jobs:
+  proxy-test:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start vite-proxy server
+        run: |
+          nohup npx vite --proxy > vite.log 2>&1 &
+          sleep 5 # Give Vite some time to start
+
+      - name: Test proxy request to public resource
+        run: |
+          # Example test using curl via the proxy server
+          # Replace PORT and TARGET as per your vite.config.js proxy settings
+          curl --proxy http://localhost:5173 https://example.com || exit 1
+
+      - name: Show Vite logs on failure
+        if: failure()
+        run: cat vite.log
