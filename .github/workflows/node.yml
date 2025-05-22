@@ -33,8 +33,7 @@ jobs:
 
       - name: Test proxy request to public resource
         run: |
-          # Adjust the proxy port and target based on your vite.config.js
-          curl --proxy http://localhost:5173 https://example.com || exit 1
+           curl -i http://localhost:5173/api
 
       - name: Show Vite logs on failure
         if: failure()
