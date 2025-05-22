@@ -11,7 +11,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # If your vite project is in a subdirectory, add a 'cd' command below (e.g., cd frontend)
       - name: Check for package.json
         run: |
           if [ ! -f package.json ]; then
@@ -29,14 +28,17 @@ jobs:
 
       - name: Start vite-proxy server
         run: |
-          nohup npx vite --proxy > vite.log 2>&1 &
+          nohup npx vite > vite.log 2>&1 &
           sleep 5 # Give Vite some time to start
 
       - name: Test proxy request to public resource
         run: |
-          # Adjust the port and target as needed based on your vite.config.js
+          # Adjust the proxy port and target based on your vite.config.js
           curl --proxy http://localhost:5173 https://example.com || exit 1
 
       - name: Show Vite logs on failure
         if: failure()
         run: cat vite.log
+
+
+
