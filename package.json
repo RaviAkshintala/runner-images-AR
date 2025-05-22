@@ -1,0 +1,11 @@
+{
+  "name": "vite-proxy-project",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vite-plugin-proxy": "^2.0.0"
+  }
+}
