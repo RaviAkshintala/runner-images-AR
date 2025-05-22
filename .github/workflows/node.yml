@@ -11,13 +11,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check for package.json
-        run: |
-          if [ ! -f package.json ]; then
-            echo "package.json not found! Please ensure you run this workflow in the directory containing package.json."
-            exit 1
-          fi
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
