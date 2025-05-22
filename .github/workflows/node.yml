@@ -2,6 +2,7 @@ name: Vite Proxy Test
 
 on: [push, pull_request]
 
+
 jobs:
   proxy-test:
     runs-on: ubuntu-24.04
@@ -10,10 +11,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # If your vite project is in a subdirectory, add a 'cd' command below (e.g., cd frontend)
+      - name: Check for package.json
+        run: |
+          if [ ! -f package.json ]; then
+            echo "package.json not found! Please ensure you run this workflow in the directory containing package.json."
+            exit 1
+          fi
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "20"
 
       - name: Install dependencies
         run: npm install
@@ -25,8 +34,7 @@ jobs:
 
       - name: Test proxy request to public resource
         run: |
-          # Example test using curl via the proxy server
-          # Replace PORT and TARGET as per your vite.config.js proxy settings
+          # Adjust the port and target as needed based on your vite.config.js
           curl --proxy http://localhost:5173 https://example.com || exit 1
 
       - name: Show Vite logs on failure
