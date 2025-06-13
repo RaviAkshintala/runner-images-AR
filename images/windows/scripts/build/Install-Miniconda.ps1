@@ -7,19 +7,8 @@
 $condaDestination = "C:\Miniconda"
 $installerName = "Miniconda3-latest-Windows-x86_64.exe"
 
-#region Supply chain security
-$distributorFileHash = $null
-$checksums = (ConvertFrom-HTML -Uri 'https://repo.anaconda.com/miniconda/').SelectNodes('//html/body/table/tr')
-
-foreach ($node in $checksums) {
-    if ($node.ChildNodes[1].InnerText -eq $installerName) {
-        $distributorFileHash = $node.ChildNodes[7].InnerText
-    }
-}
-
-if ($null -eq $distributorFileHash) {
-    throw "Unable to find checksum for $installerName in https://repo.anaconda.com/miniconda/"
-}
+# specify the SHA-256 hash of the installer
+$distributorFileHash = "ea482f35b4861f047dc525c1e8dc645cc761a5460a121caf726dec098c5804de"
 #endregion
 
 Install-Binary `
