@@ -1,0 +1,64 @@
+name: Install Miniconda and Run Tests
+
+on:
+  push:
+   
+
+jobs:
+  install-miniconda:
+    runs-on: windows-latest 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Variables
+        run: |
+          echo "condaDestination=C:\Miniconda" >> $env:GITHUB_ENV
+          echo "installerName=Miniconda3-latest-Windows-x86_64.exe" >> $env:GITHUB_ENV
+
+      - name: Download and Verify Installer
+        shell: pwsh
+        run: |
+          $condaDestination = $env:condaDestination
+          $installerName = $env:installerName
+
+          #region Supply chain security
+          $distributorFileHash = $null
+          Add-Type -AssemblyName System.Web
+          $html = Invoke-WebRequest -Uri 'https://repo.anaconda.com/miniconda/' | Select-Object -ExpandProperty Content
+          $doc = New-Object -ComObject "HTMLFile"
+          $doc.IHTMLDocument2_write($html)
+          $doc.Close()
+          $checksums = $doc.getElementsByTagName("tr")
+
+          foreach ($node in $checksums) {
+              if ($node.children[1].innerText -eq $installerName) {
+                  $distributorFileHash = $node.children[7].innerText
+              }
+          }
+
+          if ($null -eq $distributorFileHash) {
+              throw "Unable to find checksum for $installerName in https://repo.anaconda.com/miniconda/"
+          }
+          #endregion
+
+          # Download installer
+          Invoke-WebRequest -Uri "https://repo.anaconda.com/miniconda/$installerName" -OutFile $installerName
+
+          # Validate checksum
+          $actualHash = Get-FileHash -Path $installerName -Algorithm SHA256
+          if ($actualHash.Hash -ne $distributorFileHash) {
+              throw "Checksum mismatch. Expected $distributorFileHash, got $($actualHash.Hash)"
+          }
+
+          # Install silently
+          Start-Process -FilePath .\$installerName -ArgumentList "/S", "/AddToPath=0", "/RegisterPython=0", "/D=$condaDestination" -Wait
+
+          # Set CONDA environment variable
+          [Environment]::SetEnvironmentVariable("CONDA", $condaDestination, "Machine")
+
+      - name: Run Pester Tests
+        shell: pwsh
+        run: |
+          Invoke-Pester -Script "Miniconda"
+
