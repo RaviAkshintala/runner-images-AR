@@ -14,7 +14,7 @@ jobs:
       - name: Git
         run: sudo apt update
              sudo apt install curl gnupg2 ca-certificates lsb-release libcurl4-openssl-dev libexpat1-dev gettext libz-dev
-             curl -sSL https://github.com/git/git/archive/refs/tags/v2.50.1.tar.gz -o git-2.50.1.tar.gz
+             curl -s https://github.com/git/git/archive/refs/tags/v2.50.1.tar.gz -o git-2.50.1.tar.gz
              tar -xvzf git-2.50.1.tar.gz
              cd git-2.50.1
              sudo apt install make gcc
