@@ -14,23 +14,12 @@ jobs:
       - name: Update packages
         run: sudo apt update
 
-      - name: Install dependencies
-        run: sudo apt install -y wget make gcc libcurl4-openssl-dev libexpat1-dev gettext libz-dev
-
-      - name: Download Git tarball
-        run: wget https://api.github.com/repos/git/git/tarball/v2.50.1 -O git-2.50.1.tar.gz
-
-      - name: Extract tarball
-        run: tar -xvzf git-2.50.1.tar.gz
-
-      - name: Install Git from source
-        run: |
-              cd $(ls -d git-*/ | head -n 1)
-              sudo make prefix=/usr/local all
-              sudo make prefix=/usr/local install
-
-
-   
+      - name: git
+        run: wget https://github.com/git/git/archive/refs/tags/v2.50.1.tar.gz
+             tar -xzvf v2.50.1.tar.gz
+             cd git-2.50.1
+             make prefix=/usr/local all
+             sudo make prefix=/usr/local install
 
       - name: Show Git Version
         run: git --version
