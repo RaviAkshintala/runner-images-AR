@@ -1,35 +1,37 @@
 #!/bin/bash -e
 ################################################################################
 ##  File:  install-git.sh
-##  Desc:  Install Git and Git-FTP
+##  Desc:  Install Git 2.50.1 from source and Git-FTP
 ################################################################################
 
 # Source the helpers for use with the script
 source $HELPER_SCRIPTS/install.sh
 
-GIT_REPO="ppa:git-core/ppa"
+## Install dependencies for Git from source
+sudo apt update
+sudo apt install -y libcurl4-openssl-dev libexpat1-dev gettext libz-dev
 
-## Install git
-add-apt-repository $GIT_REPO -y
-apt-get update
-apt-get install git
+# Download Git 2.50.1 tarball
+wget https://github.com/git/git/archive/refs/tags/v2.50.1.tar.gz -O git-2.50.1.tar.gz
 
-# Git version 2.35.2 introduces security fix that breaks action\checkout https://github.com/actions/checkout/issues/760
-cat <<EOF >> /etc/gitconfig
-[safe]
-        directory = *
-EOF
+# Extract the tarball
+tar -xvzf git-2.50.1.tar.gz
 
-# Install git-ftp
-apt-get install git-ftp
+# Navigate to the extracted Git directory
+cd $(ls -d git-*/ | head -n 1)
 
-# Remove source repo's
-add-apt-repository --remove $GIT_REPO
+# Compile and Install Git from source
+sudo make prefix=/usr/local all
+sudo make prefix=/usr/local install
 
-# Document apt source repo's
-echo "git-core $GIT_REPO" >> $HELPER_SCRIPTS/apt-sources.txt
+# Install Git-FTP
+sudo apt-get install -y git-ftp
 
-# Add well-known SSH host keys to known_hosts
+# Clean up the tarball
+rm -f git-2.50.1.tar.gz
+
+# Add SSH keys for known hosts
+echo "Adding GitHub and Azure SSH keys to known_hosts..."
 ssh-keyscan -t rsa,ecdsa,ed25519 github.com >> /etc/ssh/ssh_known_hosts
 ssh-keyscan -t rsa ssh.dev.azure.com >> /etc/ssh/ssh_known_hosts
 
