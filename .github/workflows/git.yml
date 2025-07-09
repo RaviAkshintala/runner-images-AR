@@ -14,7 +14,7 @@ jobs:
       - name: Git
         run: sudo apt update
              sudo apt install curl
-             curl -L https://api.github.com/repos/git/git/tarball/v2.50.1 -o git-2.50.1.tar.gz
+             wget https://api.github.com/repos/git/git/tarball/v2.50.1 -o git-2.50.1.tar.gz
              ls -l git-2.50.1.tar.gz
 
              tar -xvzf git-2.50.1.tar.gz
