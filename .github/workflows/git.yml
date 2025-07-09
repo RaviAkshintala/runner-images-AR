@@ -13,14 +13,14 @@ jobs:
 
       - name: Git
         run: sudo apt update
-             sudo apt install wget
+             sudo apt install wget make gcc libcurl4-openssl-dev libexpat1-dev gettext libz-dev
              wget https://api.github.com/repos/git/git/tarball/v2.50.1 -o git-2.50.1.tar.gz
              ls -l git-2.50.1.tar.gz
 
              tar -xvzf git-2.50.1.tar.gz
 
              cd git-2.50.1
-             sudo apt install make gcc libcurl4-openssl-dev libexpat1-dev gettext libz-dev
+      
              make prefix=/usr/local all
              sudo make prefix=/usr/local install
 
