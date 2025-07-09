@@ -25,7 +25,7 @@ jobs:
 
       - name: Install Git from source
         run: |
-              cd git-*
+              cd $(ls -d git-*/ | head -n 1)
               sudo make prefix=/usr/local all
               sudo make prefix=/usr/local install
 
