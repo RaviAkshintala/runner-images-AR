@@ -15,8 +15,8 @@ jobs:
         run: sudo apt update
 
       - name: git
-        run: sudo apt-get install wget -y
-             wget https://github.com/git/git/archive/refs/tags/v2.50.1.tar.gz
+        run: sudo apt-get install wget 
+             wget https://github.com/git/git/archive/refs/tags/v2.50.1.tar.gz -O git-2.50.1.tar.gz
              tar -xvzf git-2.50.1.tar.gz
              cd git-2.50.1
              make prefix=/usr/local all
