@@ -11,18 +11,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Git
+      - name: Update packages
         run: sudo apt update
-             sudo apt install -y wget make gcc libcurl4-openssl-dev libexpat1-dev gettext libz-dev
-             wget https://api.github.com/repos/git/git/tarball/v2.50.1 -o git-2.50.1.tar.gz
-             ls -l git-2.50.1.tar.gz
 
-             tar -xvzf git-2.50.1.tar.gz
+      - name: Install dependencies
+        run: sudo apt install -y wget make gcc libcurl4-openssl-dev libexpat1-dev gettext libz-dev
 
-             cd git-2.50.1
-      
-             make prefix=/usr/local all
-             sudo make prefix=/usr/local install
+      - name: Download Git tarball
+        run: wget https://api.github.com/repos/git/git/tarball/v2.50.1 -O git-2.50.1.tar.gz
+
+      - name: Extract tarball
+        run: tar -xvzf git-2.50.1.tar.gz
+
+      - name: Install Git from source
+        run: |
+              cd git-*
+              sudo make prefix=/usr/local all
+              sudo make prefix=/usr/local install
+
 
    
 
