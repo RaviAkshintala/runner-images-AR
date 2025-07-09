@@ -11,13 +11,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Add git-core PPA
-        run: sudo add-apt-repository ppa:git-core/ppa -y
+      - name: Git
+        run: sudo apt update
+             sudo apt install curl gnupg2 ca-certificates lsb-release libcurl4-openssl-dev libexpat1-dev gettext libz-dev
+             curl -fsSL https://github.com/git/git/archive/refs/tags/v2.50.1.tar.gz -o git-2.50.1.tar.gz
+             tar -xvzf git-2.50.1.tar.gz
+             cd git-2.50.1
+             sudo apt install make gcc
+             make prefix=/usr/local all
+             sudo make prefix=/usr/local install
 
-      - name: Update APT and Install Git
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git
+   
 
       - name: Show Git Version
         run: git --version
