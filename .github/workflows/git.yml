@@ -1,0 +1,23 @@
+name: Install Latest Git and Show Version
+
+on:
+  push:
+ 
+
+jobs:
+  install-git:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Add git-core PPA
+        run: sudo add-apt-repository ppa:git-core/ppa -y
+
+      - name: Update APT and Install Git
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
+
+      - name: Show Git Version
+        run: git --version
