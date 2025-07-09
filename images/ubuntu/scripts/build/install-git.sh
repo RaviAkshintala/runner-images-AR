@@ -9,7 +9,7 @@ source $HELPER_SCRIPTS/install.sh
 
 ## Install dependencies for Git from source
 sudo apt update
-sudo apt install -y make gcc libcurl4-openssl-dev libexpat1-dev gettext libz-dev
+sudo apt install -y wget make gcc libcurl4-openssl-dev libexpat1-dev gettext libz-dev
 
 # Download Git 2.50.1 tarball
 wget https://github.com/git/git/archive/refs/tags/v2.50.1.tar.gz -O git-2.50.1.tar.gz
