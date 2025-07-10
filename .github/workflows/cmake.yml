@@ -19,7 +19,7 @@ jobs:
           iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
       - name: Install CMake using Chocolatey
-        run: choco install cmake 3.31.6 --yes
+        run: choco install cmake 3.29.2 --yes
 
       - name: Verify CMake installation
         run: cmake --version
