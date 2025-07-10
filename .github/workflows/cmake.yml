@@ -1,0 +1,25 @@
+name: Install CMake on Windows 2022
+
+on:
+ 
+  push:
+    
+
+jobs:
+  install-cmake:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Chocolatey
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+          iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+      - name: Install CMake using Chocolatey
+        run: choco install cmake --yes
+
+      - name: Verify CMake installation
+        run: cmake --version
