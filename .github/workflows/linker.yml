@@ -11,8 +11,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: ./.github/actions/setup-node
+
 
       - name: Set up Rust
         uses: ./.github/actions/setup-rust
