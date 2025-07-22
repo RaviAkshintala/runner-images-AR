@@ -187,6 +187,22 @@
     ],
     "docker": {
         "images": [
+            "alpine:3.18",
+            "alpine:3.19",
+            "alpine:3.20",
+            "alpine:3.21",
+            "alpine:3.22",
+            "debian:11",
+            "debian:12",
+            "moby/buildkit:latest",
+            "node:18",
+            "node:20",
+            "node:22",
+            "node:18-alpine",
+            "node:20-alpine",
+            "node:22-alpine",
+            "ubuntu:20.04",
+            "ubuntu:22.04"
         ],
         "components": [
             {
