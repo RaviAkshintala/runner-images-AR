@@ -1,9 +1,6 @@
 name: Build and StreamAnalytics CI/CD
 
-on:
-  push:
-    branches:
-      - main 
+on: [push, pull_request]
 jobs:
   build:
     runs-on: windows-latest  
