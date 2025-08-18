@@ -1,0 +1,29 @@
+name: Build and StreamAnalytics CI/CD
+
+on:
+  push:
+    branches:
+      - main 
+jobs:
+  build:
+    runs-on: windows-latest  
+
+    steps:
+    # Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Install Node.js
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.18'
+
+    # Install Azure Stream Analytics CLI
+    - name: Install Azure Stream Analytics CLI
+      run: npm install -g azure-streamanalytics-cicd --force --loglevel verbose
+
+    # Run the Stream Analytics Build
+    - name: Run Stream Analytics Build
+      run: |
+        azure-streamanalytics-cicd build -project <project.asaproj> -outputpath <path_to_output>
