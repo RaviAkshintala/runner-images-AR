@@ -1,9 +1,10 @@
 name: Build and StreamAnalytics CI/CD
 
 on: [push, pull_request]
+
 jobs:
   build:
-    runs-on: windows-latest  
+    runs-on: windows-latest  # Equivalent to pool: vmImage: windows-latest
 
     steps:
     # Checkout the repository
