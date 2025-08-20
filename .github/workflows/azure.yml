@@ -19,7 +19,7 @@ jobs:
 
     # Install Azure Stream Analytics CLI
     - name: Install Azure Stream Analytics CLI
-      run:  install -g -force azure-streamanalytics-cicd --loglevel verbose
+      run:  npm install -g -force azure-streamanalytics-cicd --loglevel verbose
 
     # Run the Stream Analytics Build
     - name: Run Stream Analytics Build
