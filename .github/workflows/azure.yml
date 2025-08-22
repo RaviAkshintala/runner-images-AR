@@ -1,4 +1,4 @@
-name: Build Stream Analytics Project (Windows)
+name: Build ASA Project on Windows with Manual CLI Install
 
 on: [push, pull_request]
 
@@ -10,10 +10,15 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.18'
+
+      - name: Install .NET Core 3.1 Runtime (manually)
+        run: |
+          Invoke-WebRequest -Uri "https://download.visualstudio.microsoft.com/download/pr/fc10fdc8-3470-405e-b021-03a6cb35c7b5/383f8c00ef88969b7c65ef1c2ac02ec2/dotnet-runtime-3.1.32-win-x64.exe" -OutFile "C:\dotnet-runtime-3.1.exe"
+          Start-Process "C:\dotnet-runtime-3.1.exe" -ArgumentList "/quiet", "/norestart" -Wait
 
       - name: Create install directory
         run: |
@@ -23,12 +28,9 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://registry.npmjs.org/azure-streamanalytics-cicd/-/azure-streamanalytics-cicd-3.0.0.tgz" -OutFile "C:\asa-cli\cli.tgz"
 
-      - name: Extract package
+      - name: Extract and install ASA CLI manually
         run: |
           tar -xvzf C:\asa-cli\cli.tgz -C C:\asa-cli
-
-      - name: Install package locally and link
-        run: |
           cd C:\asa-cli\package
           npm install
           npm link
@@ -36,6 +38,7 @@ jobs:
       - name: Add npm global path to system PATH
         run: echo "$env:APPDATA\npm" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
-      - name: Run ASA Build
+      - name: Build Stream Analytics project
         run: azure-streamanalytics-cicd build --v2 --project ./asaproj.json --outputPath ./Deploy
 
+  
