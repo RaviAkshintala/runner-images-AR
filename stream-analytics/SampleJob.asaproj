@@ -1,0 +1,45 @@
+{
+  "name": "SampleJob",
+  "properties": {
+    "query": "./query.asaql",
+    "inputs": [
+      {
+        "name": "Input",
+        "properties": {
+          "type": "Reference",
+          "datasource": {
+            "type": "Json",
+            "properties": {
+              "location": "./inputs/input.json"
+            }
+          },
+          "serialization": {
+            "type": "Json",
+            "properties": {
+              "encoding": "UTF8"
+            }
+          }
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Output",
+        "properties": {
+          "datasource": {
+            "type": "Json",
+            "properties": {
+              "location": "./outputs/output.json"
+            }
+          },
+          "serialization": {
+            "type": "Json",
+            "properties": {
+              "encoding": "UTF8"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
