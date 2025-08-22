@@ -8,9 +8,18 @@
         "properties": {
           "type": "Stream",
           "datasource": {
-            "type": "Stream",
+            "type": "Microsoft.Storage/Blob",
             "properties": {
-              "sourceType": "Other"
+              "storageAccounts": [
+                {
+                  "accountName": "mystorageaccount",
+                  "accountKey": ""
+                }
+              ],
+              "container": "input-container",
+              "pathPattern": "{date}/{time}",
+              "dateFormat": "yyyy/MM/dd",
+              "timeFormat": "HH"
             }
           },
           "serialization": {
@@ -27,8 +36,16 @@
         "name": "Output",
         "properties": {
           "datasource": {
-            "type": "Other",
-            "properties": {}
+            "type": "Microsoft.Storage/Blob",
+            "properties": {
+              "storageAccounts": [
+                {
+                  "accountName": "mystorageaccount",
+                  "accountKey": ""
+                }
+              ],
+              "container": "output-container"
+            }
           },
           "serialization": {
             "type": "Json",
