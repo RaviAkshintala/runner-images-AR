@@ -1,4 +1,4 @@
-name: Build and StreamAnalytics CI/CD
+name: Build Stream Analytics Project (Windows)
 
 on: [push, pull_request]
 
@@ -7,30 +7,40 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.18'
 
-      - name: Manually install Azure Stream Analytics CLI
+      - name: Create install directory
         run: |
-          mkdir -p ~/.npm-global/lib/node_modules
-          mkdir cli-temp && cd cli-temp
-          curl -L https://registry.npmjs.org/azure-streamanalytics-cicd/-/azure-streamanalytics-cicd-3.0.0.tgz -o cli.tgz
-          tar -xzf cli.tgz
-          mkdir -p ~/.npm-global/lib/node_modules/azure-streamanalytics-cicd
-          cp -r package/* ~/.npm-global/lib/node_modules/azure-streamanalytics-cicd/
-          echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
-          cd ~/.npm-global/lib/node_modules/azure-streamanalytics-cicd
+          mkdir C:\asa-cli
+
+      - name: Download azure-streamanalytics-cicd
+        run: |
+          Invoke-WebRequest -Uri "https://registry.npmjs.org/azure-streamanalytics-cicd/-/azure-streamanalytics-cicd-3.0.0.tgz" -OutFile "C:\asa-cli\cli.tgz"
+
+      - name: Extract package
+        run: |
+          tar -xvzf C:\asa-cli\cli.tgz -C C:\asa-cli
+
+      - name: Install package locally and link
+        run: |
+          cd C:\asa-cli\package
+          npm install
           npm link
 
-      - name: Build Stream Analytics project
+      - name: Add npm global path to system PATH
+        run: echo "$env:APPDATA\npm" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
+
+      - name: Run ASA Build
         run: azure-streamanalytics-cicd build --v2 --project ./asaproj.json --outputPath ./Deploy
 
-      - name: Upload Artifacts
+      - name: Upload output artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: asa-artifacts
+          name: asa-templates
           path: Deploy/
