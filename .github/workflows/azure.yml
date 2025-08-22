@@ -32,6 +32,8 @@ jobs:
           echo "$env:APPDATA\npm" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
       - name: Build Stream Analytics Project
-        run: azure-streamanalytics-cicd build --v2 --project ./asaproj.json --outputPath ./Deploy
+        run: azure-streamanalytics-cicd build --v2 --project ./stream-analytics/SampleJob.asaproj.json --outputPath ./Deploy
+
+
 
       
