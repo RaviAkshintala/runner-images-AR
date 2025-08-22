@@ -14,10 +14,12 @@ jobs:
         with:
           node-version: '20.18'
 
-      - name: Download .NET Core 3.1 Runtime using curl
+      - name: Download .NET Core 3.1 Runtime
         run: |
-          curl.exe -L "https://download.visualstudio.microsoft.com/download/pr/fc10fdc8-3470-405e-b021-03a6cb35c7b5/383f8c00ef88969b7c65ef1c2ac02ec2/dotnet-runtime-3.1.32-win-x64.exe" -o "C:\dotnet-runtime-3.1.exe"
-          Start-Process "C:\dotnet-runtime-3.1.exe" -ArgumentList "/quiet","/norestart" -Wait
+         curl.exe -L "https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.32/dotnet-runtime-3.1.32-win-x64.exe" -o "C:\dotnet-runtime-3.1.exe"
+         Start-Process "C:\dotnet-runtime-3.1.exe" -ArgumentList "/quiet","/norestart" -Wait
+
+
 
       - name: Install ASA CLI manually
         run: |
