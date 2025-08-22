@@ -4,19 +4,33 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.18'
 
-      - name: Install Azure Stream Analytics CLI
-        run: npm install -g azure-streamanalytics-cicd
+      - name: Manually install Azure Stream Analytics CLI
+        run: |
+          mkdir -p ~/.npm-global/lib/node_modules
+          mkdir cli-temp && cd cli-temp
+          curl -L https://registry.npmjs.org/azure-streamanalytics-cicd/-/azure-streamanalytics-cicd-3.0.0.tgz -o cli.tgz
+          tar -xzf cli.tgz
+          mkdir -p ~/.npm-global/lib/node_modules/azure-streamanalytics-cicd
+          cp -r package/* ~/.npm-global/lib/node_modules/azure-streamanalytics-cicd/
+          echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
+          cd ~/.npm-global/lib/node_modules/azure-streamanalytics-cicd
+          npm link
 
-      - name: Build ASA Project
-        run: azure-streamanalytics-cicd build --v2 --project stream-analytics/SampleJob.asaproj --outputPath ./Deploy
+      - name: Build Stream Analytics project
+        run: azure-streamanalytics-cicd build --v2 --project ./asaproj.json --outputPath ./Deploy
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: asa-artifacts
+          path: Deploy/
