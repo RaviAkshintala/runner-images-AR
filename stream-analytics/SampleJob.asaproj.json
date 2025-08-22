@@ -1,0 +1,43 @@
+{
+  "name": "SampleJob",
+  "properties": {
+    "query": "SELECT * INTO Output FROM Input",
+    "inputs": [
+      {
+        "name": "Input",
+        "properties": {
+          "type": "Stream",
+          "datasource": {
+            "type": "Stream",
+            "properties": {
+              "sourceType": "Other"
+            }
+          },
+          "serialization": {
+            "type": "Json",
+            "properties": {
+              "encoding": "UTF8"
+            }
+          }
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "name": "Output",
+        "properties": {
+          "datasource": {
+            "type": "Other",
+            "properties": {}
+          },
+          "serialization": {
+            "type": "Json",
+            "properties": {
+              "encoding": "UTF8"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
