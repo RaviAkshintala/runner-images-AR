@@ -16,7 +16,7 @@ jobs:
           node-version: '20.18'
 
       - name: Install Azure Stream Analytics CLI
-        run: npm install -g -f azure-streamanalytics-cicd --loglevel verbose
+        run: npm install -g -f azure-streamanalytics-cicd@2.2.1 --loglevel verbose
 
       - name: Build ASA Project
         run: |
