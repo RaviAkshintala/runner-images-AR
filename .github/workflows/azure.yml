@@ -39,8 +39,3 @@ jobs:
       - name: Run ASA Build
         run: azure-streamanalytics-cicd build --v2 --project ./asaproj.json --outputPath ./Deploy
 
-      - name: Upload output artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: asa-templates
-          path: Deploy/
