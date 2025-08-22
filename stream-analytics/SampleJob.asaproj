@@ -1,16 +1,16 @@
 {
   "name": "SampleJob",
   "properties": {
-    "query": "./query.asaql",
+    "query": "SELECT * INTO Output FROM Input",
     "inputs": [
       {
         "name": "Input",
         "properties": {
-          "type": "Reference",
+          "type": "Stream",
           "datasource": {
-            "type": "Json",
+            "type": "Stream",
             "properties": {
-              "location": "./inputs/input.json"
+              "sourceType": "Other"
             }
           },
           "serialization": {
@@ -27,10 +27,8 @@
         "name": "Output",
         "properties": {
           "datasource": {
-            "type": "Json",
-            "properties": {
-              "location": "./outputs/output.json"
-            }
+            "type": "Other",
+            "properties": {}
           },
           "serialization": {
             "type": "Json",
