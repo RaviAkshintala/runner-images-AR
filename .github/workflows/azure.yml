@@ -32,7 +32,4 @@ jobs:
       - name: Build Stream Analytics Project
         run: azure-streamanalytics-cicd build --v2 --project ./asaproj.json --outputPath ./Deploy
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: asa-output
-          path: Deploy/
+      
