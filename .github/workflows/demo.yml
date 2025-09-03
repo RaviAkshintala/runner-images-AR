@@ -2,8 +2,6 @@ name: Azure PWSH Module Install
 
 on: [push, pull_request]
 
-  
-
 jobs:
   install-az-module:
     runs-on: ubuntu-24.04
@@ -12,12 +10,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Az PowerShell Modules
+      - name: Install Az PowerShell Modules 
         shell: pwsh
         run: |
-          Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
-          Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-          Install-Module -Name Az -Scope CurrentUser -Force -AllowClobber
-          
-          # Confirm installation
+          # Make sure the latest PowerShellGet is available
+          Install-Module -Name PowerShellGet -Force -Scope CurrentUser -AllowClobber
+
+          # Trust the PSGallery repository
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
+          # Install the Az module
+          Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber
+
+          # Verify installation
           Get-InstalledModule -Name Az
