@@ -1,8 +1,10 @@
 name: Install PowerShell Az Modules
 
 on:
-  workflow_dispatch:
   push:
+    paths:
+      - 'images/ubuntu/scripts/build/Install-PowerShellAzModules.ps1'
+  pull_request:
     paths:
       - 'images/ubuntu/scripts/build/Install-PowerShellAzModules.ps1'
 
