@@ -1,0 +1,35 @@
+name: SSH Keyscan on Windows 2025
+
+on: [push, pull_request]
+
+jobs:
+  ssh-keyscan-job:
+    runs-on: windows-2025
+
+    steps:
+      - name: Check out repo (optional)
+        uses: actions/checkout@v4
+
+      - name: Ensure OpenSSH Client is Installed
+        shell: powershell
+        run: |
+          $capability = Get-WindowsCapability -Online | Where-Object { $_.Name -like 'OpenSSH.Client*' }
+          if ($capability.State -ne 'Installed') {
+            Write-Host "Installing OpenSSH Client..."
+            Add-WindowsCapability -Online -Name 'OpenSSH.Client~~~~0.0.1.0'
+          } else {
+            Write-Host "OpenSSH Client already installed."
+          }
+
+      - name: Create .ssh Directory
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.ssh"
+
+      - name: Run ssh-keyscan with Verbose Output
+        shell: powershell
+        run: |
+          Write-Host "Running ssh-keyscan with verbose output..."
+          ssh-keyscan -v github.com | Out-File -Encoding ascii -Append "$env:USERPROFILE\.ssh\known_hosts"
+          Write-Host "`n==> Known Hosts File Content:"
+          Get-Content "$env:USERPROFILE\.ssh\known_hosts"
